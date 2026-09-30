@@ -8,18 +8,6 @@ It does not talk to the user. It is called by the Buyer Agent.
 from common import ask, banner
 from tools.supplier_tool import supplier_information
 
-# ---------------------------------------------------------------------------
-# TODO 2  —  Complete this prompt.
-#
-# As written, it only says "recommend one supplier". It does not tell the
-# agent which attributes matter, how to weigh them, or that the factory's
-# quantity and deadline are hard constraints rather than preferences.
-#
-# Run the system first and look at what it recommends. Then rewrite the
-# instruction block so the agent explicitly compares price, delivery time,
-# reliability and capacity, and rejects any supplier that cannot meet the
-# requested quantity or deadline.
-# ---------------------------------------------------------------------------
 ANALYSIS_PROMPT = """You are the Supplier Analysis Agent for a factory.
 
 Factory request:
@@ -31,7 +19,17 @@ Criteria identified by the Buyer Agent:
 Supplier information:
 {suppliers}
 
-Recommend one supplier.
+Apply the following decision logic exactly:
+1. Extract the required quantity and deadline from the request.
+2. Reject any supplier whose capacity is below the required quantity.
+3. Reject any supplier whose delivery time is greater than the deadline.
+4. Among the remaining suppliers, compare price_per_unit (lower is better),
+   delivery_days (shorter is better), reliability_score (higher is better),
+   and capacity_units (higher is better but only after meeting the quantity limit).
+5. Recommend the best feasible supplier; if none are feasible, state clearly that
+   no supplier meets the factory's quantity and deadline constraints.
+6. Return a short answer with: Selected supplier, Why it was chosen, and
+   any trade-offs or warnings.
 """
 
 
