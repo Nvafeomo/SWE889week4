@@ -1,6 +1,6 @@
 # Supplier agent project
 
-This project picks a supplier for a factory request.
+This project picks a supplier for a factory request. It uses a buyer agent, a supplier analysis agent, and a supplier data tool.
 
 ## Run it
 
@@ -24,6 +24,8 @@ q. Quit
 I updated the system so it checks the quantity and deadline more carefully. It rejects suppliers that cannot meet the request and warns the user if the recommendation is not valid. The final answer is also easier to read.
 
 ## If it does not start
+
+Start Ollama first and then run the app again:
 
 ```bash
 docker compose up -d ollama
